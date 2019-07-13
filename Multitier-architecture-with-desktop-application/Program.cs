@@ -7,22 +7,32 @@ namespace Multitier_architecture_with_desktop_application
     {
         static void Main(string[] args)
         {
-            GetRequest("http://www.google.com.pk");
+            GetRequest("http://www.google.com");
             Console.ReadLine();
         }
 
         async static void GetRequest(String url)
         {
-            using (HttpClient client = new HttpClient())
+            try
             {
-                using (HttpResponseMessage response = await client.GetAsync(url))
+                using (HttpClient client = new HttpClient())
                 {
-                    using (HttpContent httpContent = response.Content)
+                    using (HttpResponseMessage response = await client.GetAsync(url))
                     {
-                        string myContent = await httpContent.ReadAsStringAsync();
-                        Console.WriteLine(myContent);
+                        using (HttpContent httpContent = response.Content)
+                        {
+                            string myContent = await httpContent.ReadAsStringAsync();
+                            Console.WriteLine(myContent);
+                        }
                     }
                 }
+            }
+            catch(HttpRequestException Ex)
+            {
+                Console.WriteLine("Error : " + Ex.Message);
+                Console.ReadLine();
+                Console.WriteLine("Press in any key for exit .....");
+                Console.ReadLine();
             }
         }
     }
