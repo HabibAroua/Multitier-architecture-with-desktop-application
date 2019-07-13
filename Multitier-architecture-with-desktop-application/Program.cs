@@ -7,7 +7,7 @@ namespace Multitier_architecture_with_desktop_application
     {
         static void Main(string[] args)
         {
-            GetRequest("");
+            GetRequest("http://www.google.com.pk");
             Console.ReadLine();
         }
 
@@ -15,7 +15,7 @@ namespace Multitier_architecture_with_desktop_application
         {
             using (HttpClient client = new HttpClient())
             {
-                using (HttpResponseMessage response = new HttpResponseMessage())
+                using (HttpResponseMessage response = await client.GetAsync(url))
                 {
                     using (HttpContent httpContent = response.Content)
                     {
