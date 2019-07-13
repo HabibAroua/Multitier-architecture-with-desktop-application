@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Net.Http;
 
 namespace Multitier_architecture_with_desktop_application
 {
@@ -10,6 +7,23 @@ namespace Multitier_architecture_with_desktop_application
     {
         static void Main(string[] args)
         {
+            GetRequest("");
+            Console.ReadLine();
+        }
+
+        async static void GetRequest(String url)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = new HttpResponseMessage())
+                {
+                    using (HttpContent httpContent = response.Content)
+                    {
+                        string myContent = await httpContent.ReadAsStringAsync();
+                        Console.WriteLine(myContent);
+                    }
+                }
+            }
         }
     }
 }
