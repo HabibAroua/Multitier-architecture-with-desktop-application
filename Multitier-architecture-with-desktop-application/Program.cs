@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace Multitier_architecture_with_desktop_application
 {
@@ -8,7 +9,7 @@ namespace Multitier_architecture_with_desktop_application
         static void Main(string[] args)
         {
             //GetRequest("http://www.google.com");
-            GetRequestHeades("http://www.google.com");
+            GetRequestHeades("http://www.microsoft.com");
             Console.ReadLine();
         }
 
@@ -47,8 +48,8 @@ namespace Multitier_architecture_with_desktop_application
                     {
                         using (HttpContent httpContent = response.Content)
                         {
-                            System.Net.Http.Headers.HttpContentHeaders headers = httpContent.Headers;
-
+                            HttpContentHeaders headers = httpContent.Headers;
+                            Console.WriteLine(headers);
                         }
                     }
                 }
