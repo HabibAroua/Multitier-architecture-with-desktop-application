@@ -9,9 +9,17 @@ namespace Multitier_architecture_with_desktop_application
     {
         static void Main(string[] args)
         {
-            //GetRequest("http://www.google.com");
-            //GetRequestHeades("http://www.microsoft.com");
-            PostRequest("http://ptsv2.com/post.php");
+            try
+            {
+                //GetRequest("http://www.google.com");
+                //GetRequestHeades("http://www.microsoft.com");
+                PostRequest("http://ptsv2.com/post.php");
+            }
+            catch(Exception Ex)
+            {
+                Console.WriteLine("Error : " + Ex.Message);
+                Console.ReadLine();
+            }
             Console.ReadLine();
         }
 
