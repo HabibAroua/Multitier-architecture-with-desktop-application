@@ -11,7 +11,7 @@ namespace Multitier_architecture_with_desktop_application
         {
             //GetRequest("http://www.google.com");
             //GetRequestHeades("http://www.microsoft.com");
-            PostRequest("https://posttestserver.com/post.php");
+            PostRequest("http://ptsv2.com/post.php");
             Console.ReadLine();
         }
 
@@ -67,23 +67,33 @@ namespace Multitier_architecture_with_desktop_application
 
         async static void PostRequest(string url)
         {
-            IEnumerable<KeyValuePair<string, string>> queries = new List<KeyValuePair<string, string>>()
+            try
+            {
+                IEnumerable<KeyValuePair<string, string>> queries = new List<KeyValuePair<string, string>>()
             {
                 new KeyValuePair<string, string>("query1","Habib"),
                 new KeyValuePair<string, string>("query2","Safa")
             };
-            HttpContent q = new FormUrlEncodedContent(queries);
-            using (HttpClient client = new HttpClient())
-            {
-                using (HttpResponseMessage response = await client.PostAsync(url, q))
+                HttpContent q = new FormUrlEncodedContent(queries);
+                using (HttpClient client = new HttpClient())
                 {
-                    using (HttpContent content = response.Content)
+                    using (HttpResponseMessage response = await client.PostAsync(url, q))
                     {
-                        string myContent = await content.ReadAsStringAsync();
-                        HttpContentHeaders headers = content.Headers;
-                        Console.WriteLine(myContent);
+                        using (HttpContent content = response.Content)
+                        {
+                            string myContent = await content.ReadAsStringAsync();
+                            HttpContentHeaders headers = content.Headers;
+                            Console.WriteLine(myContent);
+                        }
                     }
                 }
+            }
+            catch(HttpRequestException Ex)
+            {
+                Console.WriteLine("Error : " + Ex.Message);
+                Console.ReadLine();
+                Console.WriteLine("Press in any key for exit .....");
+                Console.ReadLine();
             }
         }
     }
