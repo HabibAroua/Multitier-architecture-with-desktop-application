@@ -62,5 +62,10 @@ namespace Multitier_architecture_with_desktop_application
                 Console.ReadLine();
             }
         }
+
+        async static void PostRequest(string url)
+        {
+
+        }
     }
 }
