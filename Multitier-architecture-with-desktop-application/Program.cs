@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -9,7 +10,8 @@ namespace Multitier_architecture_with_desktop_application
         static void Main(string[] args)
         {
             //GetRequest("http://www.google.com");
-            GetRequestHeades("http://www.microsoft.com");
+            //GetRequestHeades("http://www.microsoft.com");
+            PostRequest("https://posttestserver.com/post.php");
             Console.ReadLine();
         }
 
@@ -65,7 +67,24 @@ namespace Multitier_architecture_with_desktop_application
 
         async static void PostRequest(string url)
         {
-
+            IEnumerable<KeyValuePair<string, string>> queries = new List<KeyValuePair<string, string>>()
+            {
+                new KeyValuePair<string, string>("query1","Habib"),
+                new KeyValuePair<string, string>("query2","Safa")
+            };
+            HttpContent q = new FormUrlEncodedContent(queries);
+            using (HttpClient client = new HttpClient())
+            {
+                using (HttpResponseMessage response = await client.PostAsync(url, q))
+                {
+                    using (HttpContent content = response.Content)
+                    {
+                        string myContent = await content.ReadAsStringAsync();
+                        HttpContentHeaders headers = content.Headers;
+                        Console.WriteLine(myContent);
+                    }
+                }
+            }
         }
     }
 }
