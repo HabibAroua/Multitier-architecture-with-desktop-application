@@ -13,7 +13,7 @@ namespace Multitier_architecture_with_desktop_application
             {
                 //GetRequest("http://www.google.com");
                 //GetRequestHeades("http://www.microsoft.com");
-                PostRequest("http://ptsv2.com/post.php");
+                PostRequest("http://localhost/post/index.php");
             }
             catch(Exception Ex)
             {
@@ -78,10 +78,10 @@ namespace Multitier_architecture_with_desktop_application
             try
             {
                 IEnumerable<KeyValuePair<string, string>> queries = new List<KeyValuePair<string, string>>()
-            {
-                new KeyValuePair<string, string>("query1","Habib"),
-                new KeyValuePair<string, string>("query2","Safa")
-            };
+                {
+                    new KeyValuePair<string, string>("name1","Habib"),
+                    new KeyValuePair<string, string>("name2","Safa")
+                };
                 HttpContent q = new FormUrlEncodedContent(queries);
                 using (HttpClient client = new HttpClient())
                 {
