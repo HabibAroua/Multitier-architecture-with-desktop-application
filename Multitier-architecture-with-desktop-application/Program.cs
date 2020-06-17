@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 
@@ -13,7 +14,8 @@ namespace Multitier_architecture_with_desktop_application
             {
                 //GetRequest("http://www.google.com");
                 //GetRequestHeades("http://www.microsoft.com");
-                PostRequest("http://localhost/post/index.php");
+                //PostRequest("http://localhost/post/index.php");
+                PostRequestJson("http://51.178.169.200/zabbix/api_jsonrpc.php");
             }
             catch(Exception Ex)
             {
@@ -102,6 +104,26 @@ namespace Multitier_architecture_with_desktop_application
                 Console.ReadLine();
                 Console.WriteLine("Press in any key for exit .....");
                 Console.ReadLine();
+            }
+        }
+
+        static void PostRequestJson(string url)
+        {
+            var httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
+            httpWebRequest.ContentType = "application/json";
+            httpWebRequest.Method = "POST";
+
+            using (var streamWriter = new System.IO.StreamWriter(httpWebRequest.GetRequestStream()))
+            {
+                string json = "{\"jsonrpc\": \"2.0\",\"method\": \"user.login\",\"params\": {\"user\": \"Admin\",\"password\": \"zabbix\"},\"id\": 1,\"auth\": null}";
+                streamWriter.Write(json);
+            }
+
+            var httpResponse = (HttpWebResponse)httpWebRequest.GetResponse();
+            using (var streamReader = new System.IO.StreamReader(httpResponse.GetResponseStream()))
+            {
+                var result = streamReader.ReadToEnd();
+                Console.WriteLine(result);
             }
         }
     }
